@@ -30,7 +30,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        submodules: recursive
+        fetch-depth: 0
+        submodules: false
+
+    - name: Init submodules
+      run: |
+        git config --global url."https://github.com/".insteadOf git@github.com:
+        git submodule sync --recursive
+        git submodule update --init --recursive
     
     - name: Setup build environment
       run: |
